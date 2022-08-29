@@ -12,6 +12,16 @@ Stop the server
 docker compose down
 ```
 
+Show error logs
+```
+docker logs -f thm-security-wordpress-1 1>/dev/null
+```
+
+Show access logs
+```
+docker logs -f thm-security-wordpress-1 2>/dev/null
+```
+
 Run WP-Scan on the website
 
 ```
