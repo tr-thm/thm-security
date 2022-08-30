@@ -22,14 +22,13 @@ Show access logs
 docker logs -f thm-security-wordpress-1 2>/dev/null
 ```
 
-Run WP-Scan on the website
+Run WP-Scan on the website to enumerate users
 
 ```
 docker run -it --rm --network="host" wpscanteam/wpscan --url http://localhost --enumerate u
 ```
 
 Open a Bash in an Ubuntu for any sort of testing
-
 ```
 docker run -it --rm --network="host" ubuntu:22.04 bash
 ```
