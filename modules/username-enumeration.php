@@ -4,7 +4,7 @@ namespace THM\Security;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-add_filter('login_errors', ['TR\Security\UsernameEnumerationPreventer', 'login_errors'], 10, 1);
+add_filter('login_errors', ['THM\Security\UsernameEnumeration', 'login_errors'], 10, 1);
 
 class UsernameEnumeration
 {
