@@ -11,7 +11,7 @@ class DemoModule
     public static function plugins_loaded()
     {
         $REQUEST_URI = $_SERVER['REQUEST_URI'];
-        if (strpos($REQUEST_URI, '/wp-json') === 0)
+        if (0 === stripos($REQUEST_URI, '/stop'))
         {
             status_header(403);
             echo('Stop!');
