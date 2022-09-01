@@ -36,7 +36,7 @@ class UsernameEnumeration
     }
 
     /**
-     * Displays a neutral error message to the user, if a login attempt has failed.
+     * Displays a neutral error message on failed login attempts.
      * 
      * This is supposed to make it a bit harder to figure out if a certain username
      * exists on this website.

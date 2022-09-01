@@ -15,7 +15,7 @@ class FeatureLimiter
     /**
      * Entirely disables the author pages. It is not required
      * but since we already removed all links to those pages,
-     * they serve no pupose anymore.
+     * they serve no purpose anymore.
      * 
      * Affected URLs:
      * --- http://localhost/author/admin
