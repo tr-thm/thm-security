@@ -99,7 +99,7 @@ class UsernameEnumeration
     public static function body_class($classes, $class)
     {
         return array_filter($classes, function($c) {
-            return strpos($c, 'author-') !== 0;
+            return 0!== stripos($c, 'author-');
         });
     }
 }
