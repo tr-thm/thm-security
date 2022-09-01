@@ -98,7 +98,8 @@ class UsernameEnumeration
      */
     public static function body_class($classes, $class)
     {
-        return array_filter($classes, function($c) {
+        return array_filter($classes, function($c)
+        {
             return 0!== stripos($c, 'author-');
         });
     }
