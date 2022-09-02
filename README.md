@@ -33,6 +33,11 @@ Open a Bash in an Ubuntu for any sort of testing
 docker run -it --rm --network="host" ubuntu:22.04 bash
 ```
 
+Mount the current folder into the docker as /data
+```
+docker run -it --rm --network="host" -v $(pwd):/data ubuntu:22.04 bash
+```
+
 # Useful links
 
 - [PHP Documentation](https://www.php.net/manual/de/function.strpos.php)
