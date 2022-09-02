@@ -9,6 +9,12 @@ add_filter('login_errors',                ['THM\Security\UsernameEnumeration', '
 add_filter('author_link',                 ['THM\Security\UsernameEnumeration', 'author_link'],                 10, 3); 
 add_filter('the_author',                  ['THM\Security\UsernameEnumeration', 'the_author'],                  10, 1); 
 add_filter('body_class',                  ['THM\Security\UsernameEnumeration', 'body_class'],                  10, 2);
+add_filter('get_the_author_display_name', ['THM\Security\UsernameEnumeration', 'get_the_author_display_name'], 10, 4); 
+add_filter('get_comment_author',          ['THM\Security\UsernameEnumeration', 'get_comment_author'],          10, 3); 
+add_filter('rest_endpoints',              ['THM\Security\UsernameEnumeration', 'rest_endpoints'],              10, 1);
+add_filter('document_title_parts',        ['THM\Security\UsernameEnumeration', 'document_title_parts'],        10, 1);
+add_filter('oembed_response_data',        ['THM\Security\UsernameEnumeration', 'oembed_response_data'],        10, 4);
+add_filter('comment_class',               ['THM\Security\UsernameEnumeration', 'comment_class'],               10, 5);
 
 /**
  * The purpose of this module is to prevent trivial ways to
@@ -101,6 +107,94 @@ class UsernameEnumeration
         return array_filter($classes, function($c)
         {
             return 0!== stripos($c, 'author-');
+        });
+    }
+
+    /**
+     * Removes 'Posts by admin Feed' from the author pages Rss Feed meta tags
+     * Affected URLs:
+     * --- http://localhost/author/admin
+     * --- http://localhost/?author=1
+     */
+    public static function get_the_author_display_name($value, $user_id, $original_user_id)
+    {
+        if (username_exists($value))
+        {
+            $value = '';
+        }
+        return $value;
+    }
+
+    /**
+     * Selectively disables the Users REST API
+     * 
+     * Affected URLs:
+     * --- http://localhost/wp-json/wp/v2/users
+     * --- http://localhost/wp-json/wp/v2/users/1
+     */
+    public static function rest_endpoints($endpoints)
+    {
+        foreach ($endpoints as $route => $endpoint)
+        {
+            if (0 === stripos($route, '/wp/v2/users'))
+            {
+                unset($endpoints[$route]);
+            }
+        }
+        return $endpoints;
+    }
+
+    /**
+     * Removes login names from comments.
+     * 
+     * Affected URLs:
+     * --- http://localhost/hello-world/#comment-1
+     */
+    public static function get_comment_author($author, $comment_ID, $comment)
+    {
+        if (username_exists($author)) $author = '';
+        return $author;
+    }
+
+    /**
+     * Remove usernames from document title of the author pages
+     * 
+     * Affected URLs:
+     * --- http://localhost/author/admin
+     * --- http://localhost/?author=1
+     */
+    public static function document_title_parts($title)
+    {
+        return array_filter($title, function($title_part) {
+            return !username_exists($title_part);
+        });
+    }
+
+    /**
+     * Removes author and author url from the oEmbed feed
+     * 
+     * Affected URLs:
+     * --- http://localhost/wp-json/oembed/1.0/embed?url=http://localhost/hello-world&format=json
+     */
+    public static function oembed_response_data($data, $post, $width, $height)
+    {
+        if (username_exists($data['author_name']))
+        {
+            unset($data['author_name']);
+        }
+        unset($data['author_url']);
+
+        return $data;
+    }
+
+    /**
+     * Removes the comment author class from comments
+     */
+    public static function comment_class($classes, $css_class, $comment_ID, $comment, $post)
+    {
+        return array_filter($classes, function($c)
+        {
+            return 0 !== stripos($c, 'comment-author-');
         });
     }
 }

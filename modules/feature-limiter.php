@@ -5,6 +5,7 @@ namespace THM\Security;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 add_action('template_redirect', ['THM\Security\FeatureLimiter', 'template_redirect']);
+add_filter('xmlrpc_enabled', ['THM\Security\FeatureLimiter', 'xmlrpc_enabled']);
 
 /**
  * The purpose of this module is to disable some basic wordpress
@@ -28,5 +29,17 @@ class FeatureLimiter
             global $wp_query;
             $wp_query->set_404();
         }
+    }
+
+    /**
+     * Disables the XMLRPC Interface. It has been replaced by the newer
+     * REST API and is no longer needed.
+     * 
+     * It is frequently used for bruteforce or ddos attacks.
+     */
+    public static function xmlrpc_enabled($enabled)
+    {
+        $enabled = false;
+        return $enabled;
     }
 }
