@@ -11,3 +11,4 @@ require_once(dirname(__FILE__) . '/modules/demo.php');
 require_once(dirname(__FILE__) . '/modules/feature-limiter.php');
 require_once(dirname(__FILE__) . '/modules/username-enumeration.php');
 require_once(dirname(__FILE__) . '/modules/log.php');
+require_once(dirname(__FILE__) . '/modules/gui.php');

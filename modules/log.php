@@ -67,7 +67,7 @@ class Log
      */
     public static function wp_login_failed($username, $error)
     {
-
+        
     }
 
     /**
