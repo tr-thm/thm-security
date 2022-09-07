@@ -30,9 +30,9 @@ class Cron
      */
     public static function schedules($schedules)
     {
-        if (!isset($schedules["5min"]))
+        if (!isset($schedules['5min']))
         {
-            $schedules["5min"] = array(
+            $schedules['5min'] = array(
                 'interval' => 5*60,
                 'display' => __('Once every 5 minutes'));
         }
